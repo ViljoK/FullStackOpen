@@ -12,7 +12,9 @@ const Header = (props) => {
 const Content = (props) => {
     return (
         <>
-            <Part name={props.name} count={props.exercises}/>
+            <Part name={props.parts[0].name} count={props.parts[0].exercises}/>
+            <Part name={props.parts[1].name} count={props.parts[1].exercises}/>
+            <Part name={props.parts[2].name} count={props.parts[2].exercises}/>
         </>
     )
 }
@@ -27,9 +29,11 @@ const Part = (props) => {
 
 const Total = (props) => {
     let sum = 0;
-    for (let prop in props) {
-        sum += props[prop];
+    for (let part of props.parts) {
+        console.log(part);
+        sum += part.exercises;
     }
+
     return (
         <>
             <p>Number of exercises {sum}</p>
@@ -38,29 +42,29 @@ const Total = (props) => {
 }
 
 const App = () => {
-    const course = 'Half Stack application development'
-    const parts = [
-        {
-            name: 'Fundamentals of React',
-            exercises: 10
-        },
-        {
-            name: 'Using props to pass data',
-            exercises: 7
-        },
-        {
-            name: 'State of a component',
-            exercises: 14
-        }
-    ]
+    const course = {
+        name: 'Half Stack application development',
+        parts: [
+            {
+                name: 'Fundamentals of React',
+                exercises: 10
+            },
+            {
+                name: 'Using props to pass data',
+                exercises: 7
+            },
+            {
+                name: 'State of a component',
+                exercises: 14
+            }
+        ]
+    }
 
     return (
         <div>
-            <Header text={course} />
-            <Content name={parts[0].name} exercises={parts[0].exercises}/>
-            <Content name={parts[1].name} exercises={parts[1].exercises}/>
-            <Content name={parts[2].name} exercises={parts[2].exercises}/>
-            <Total exs1={parts[0].exercises} exs2={parts[1].exercises} exs3={parts[2].exercises}/>
+            <Header text={course.name} />
+            <Content parts={course.parts}/>
+            <Total parts={course.parts}/>
         </div>
     )
 }
