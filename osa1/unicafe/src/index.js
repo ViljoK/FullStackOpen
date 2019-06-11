@@ -15,26 +15,28 @@ const Statistics = ({good, bad, neutral}) => {
 
     if (total === 0) {
         return <>
-            <Display text={"No feedback given"}/>
-            </>
+            <Table contents={<Display text={"No feedback given"}/>}/>
+        </>
     }
     else {
         return <>
-            <Display text={"Good:"} value={good}/>
-            <Display text={"Neutral:"} value={neutral}/>
-            <Display text={"Bad:"} value={bad}/>
-            <Display text={"Total:"} value={total}/>
-            <Display text={"Average:"} value={avg}/>
-            <Display text={"Positive:"} value={positive} unit={"%"}/>
+            <Table contents={[
+                <Display key={0} text={"Good:"} value={good}/>,
+                <Display key={1} text={"Neutral:"} value={neutral}/>,
+                <Display key={2} text={"Bad:"} value={bad}/>,
+                <Display key={3} text={"Total:"} value={total}/>,
+                <Display key={4} text={"Average:"} value={avg}/>,
+                <Display key={5} text={"Positive:"} value={positive} unit={"%"}/>,
+            ]}/>
         </>
     }
 }
 
-const Display = props => <><p>{props.text} {props.value}{props.unit}</p></>
+const Table = props => <table><tbody>{props.contents}</tbody></table>
 
-const Button = (props) => (
-    <button className={"Button"} onClick={props.handleClick}>{props.text}</button>
-)
+const Display = props => <tr><td>{props.text}</td><td>{props.value}{props.unit}</td></tr>
+
+const Button = props => <button className={"Button"} onClick={props.handleClick}>{props.text}</button>
 
 const App = () => {
     const [good, setGood] = useState(0)
@@ -42,14 +44,14 @@ const App = () => {
     const [bad, setBad] = useState(0)
 
     return (
-        <div>
+        <>
             <Caption text="Give feedback" />
             <Button handleClick={() => setGood(good + 1)} text={"Good"} />
             <Button handleClick={() => setNeutral(neutral + 1)} text={"Neutral"} />
             <Button handleClick={() => setBad(bad + 1)} text={"Bad"} />
             <Caption text="Statistics"/>
             <Statistics good={good} bad={bad} neutral={neutral}/>
-        </div>
+        </>
     )
 }
 
