@@ -1,4 +1,5 @@
 import React from 'react'
+import './index.css'
 import Course from './components/Course'
 
 const App = () => {
@@ -19,6 +20,11 @@ const App = () => {
                 name: 'State of a component',
                 exercises: 14,
                 id: 3
+            },
+            {
+                name: 'Redux',
+                exercises: 11,
+                id: 4
             }
         ]
     }
