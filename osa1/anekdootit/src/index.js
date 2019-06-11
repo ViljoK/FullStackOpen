@@ -13,40 +13,16 @@ const App = (props) => {
     const [votes, setVotes] = useState({0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0})
     const [max, setMax] = useState({"index": 0, "votes": 0})
 
-    const changeAnecdote = () => {
-        let rnd = Math.floor(Math.random() * 6)
-        setSelected(rnd)
-    }
-
-    const makeVote = () => {
-        let newVotes = {...votes}
-        newVotes[selected] += 1
-        setVotes(newVotes)
-
-        for (let i in newVotes) {
-            if (newVotes[i] > max.votes) {
-                let newMax = {...max}
-                newMax.index = i
-                newMax.votes = newVotes[i]
-                setMax(newMax)
-            }
-        }
-    }
     console.log(selected, votes, max)
-
     return (
         <>
             <Caption text={"Anecdote of the day"}/>
-            <div>
-                {props.anecdotes[selected]}
-            </div>
+            <Display text={props.anecdotes[selected]}/>
             <Display text={"Has " + votes[selected] + " votes"}/>
-            <Button handleClick={() => changeAnecdote()} text={"Next anecdote"}/>
-            <Button handleClick={() => makeVote()} text={"Vote"}/>
+            <Button handleClick={() => changeAnecdote(setSelected)} text={"Next anecdote"}/>
+            <Button handleClick={() => makeVote(selected, votes, setVotes, max, setMax)} text={"Vote"}/>
             <Caption text={"Anekdote with most votes"}/>
-            <div>
-                {props.anecdotes[max.index]}
-            </div>
+            <Display text={props.anecdotes[max.index]}/>
             <Display text={"Has " + max.votes + " votes"}/>
         </>
     )
@@ -65,3 +41,24 @@ ReactDOM.render(
     <App anecdotes={anecdotes} />,
     document.getElementById('root')
 )
+
+//Functions
+const changeAnecdote = (setSelected) => {
+    let rnd = Math.floor(Math.random() * 6)
+    setSelected(rnd)
+}
+
+const makeVote = (selected, votes, setVotes, max, setMax) => {
+    let newVotes = {...votes}
+    newVotes[selected] += 1
+    setVotes(newVotes)
+
+    for (let i in newVotes) {
+        if (newVotes[i] > max.votes) {
+            let newMax = {...max}
+            newMax.index = i
+            newMax.votes = newVotes[i]
+            setMax(newMax)
+        }
+    }
+}
