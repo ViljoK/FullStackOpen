@@ -4,9 +4,14 @@ import './index.css'
 
 const Button = props => <button className={"Button"} onClick={props.handleClick}>{props.text}</button>
 
+const Display = props => <p>{props.text}</p>
+
+const Caption = props => <h1>{props.text}</h1>
+
 const App = (props) => {
     const [selected, setSelected] = useState(0)
     const [votes, setVotes] = useState({0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0})
+    const [max, setMax] = useState({"index": 0, "votes": 0})
 
     const changeAnecdote = () => {
         let rnd = Math.floor(Math.random() * 6)
@@ -17,16 +22,32 @@ const App = (props) => {
         let newVotes = {...votes}
         newVotes[selected] += 1
         setVotes(newVotes)
+
+        for (let i in newVotes) {
+            if (newVotes[i] > max.votes) {
+                let newMax = {...max}
+                newMax.index = i
+                newMax.votes = newVotes[i]
+                setMax(newMax)
+            }
+        }
     }
-    console.log(selected, votes)
+    console.log(selected, votes, max)
 
     return (
         <>
-            <Button handleClick={() => changeAnecdote()} text={"Next anecdote"}/>
-            <Button handleClick={() => makeVote()} text={"Vote"}/>
+            <Caption text={"Anecdote of the day"}/>
             <div>
                 {props.anecdotes[selected]}
             </div>
+            <Display text={"Has " + votes[selected] + " votes"}/>
+            <Button handleClick={() => changeAnecdote()} text={"Next anecdote"}/>
+            <Button handleClick={() => makeVote()} text={"Vote"}/>
+            <Caption text={"Anekdote with most votes"}/>
+            <div>
+                {props.anecdotes[max.index]}
+            </div>
+            <Display text={"Has " + max.votes + " votes"}/>
         </>
     )
 }
