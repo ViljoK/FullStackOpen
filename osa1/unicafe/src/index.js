@@ -1,7 +1,24 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Display = props => <><p>{props.text} {props.value}</p></>
+const Display = ({good, bad, neutral}) => {
+
+    let total = good + bad + neutral;
+    let [avg, positive] = [0, 0];
+    if (total > 0) {
+        avg = ((good - bad) / total).toFixed(2);
+        positive = (good * 100 / total).toFixed(1);
+    }
+
+    return <>
+        <p>{"Good:"} {good}</p>
+        <p>{"Neutral:"} {neutral}</p>
+        <p>{"Bad:"} {bad}</p>
+        <p>{"Total:"} {total}</p>
+        <p>{"Average:"} {avg}</p>
+        <p>{"Positive:"} {positive} {"%"}</p>
+        </>
+}
 
 const Caption = props => <><h1>{props.text}</h1></>
 
@@ -22,9 +39,7 @@ const App = () => {
             <Button handleClick={() => setNeutral(neutral + 1)} text={"Neutral"} />
             <Button handleClick={() => setBad(bad + 1)} text={"Bad"} />
             <Caption text="Statistics"/>
-            <Display text={"Good:"} value={good}/>
-            <Display text={"Neutral:"} value={neutral}/>
-            <Display text={"Bad:"} value={bad}/>
+            <Display good={good} bad={bad} neutral={neutral}/>
         </div>
     )
 }
