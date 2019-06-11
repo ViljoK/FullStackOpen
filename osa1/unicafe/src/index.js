@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
+import './index.css'
 
 const Caption = props => <><h1>{props.text}</h1></>
 
@@ -12,20 +13,27 @@ const Statistics = ({good, bad, neutral}) => {
         positive = (good * 100 / total).toFixed(1);
     }
 
-    return <>
-        <Display text={"Good:"} value={good}/>
-        <Display text={"Neutral:"} value={neutral}/>
-        <Display text={"Bad:"} value={bad}/>
-        <Display text={"Total:"} value={total}/>
-        <Display text={"Average:"} value={avg}/>
-        <Display text={"Positive:"} value={positive} unit={"%"}/>
+    if (total === 0) {
+        return <>
+            <Display text={"No feedback given"}/>
+            </>
+    }
+    else {
+        return <>
+            <Display text={"Good:"} value={good}/>
+            <Display text={"Neutral:"} value={neutral}/>
+            <Display text={"Bad:"} value={bad}/>
+            <Display text={"Total:"} value={total}/>
+            <Display text={"Average:"} value={avg}/>
+            <Display text={"Positive:"} value={positive} unit={"%"}/>
         </>
+    }
 }
 
 const Display = props => <><p>{props.text} {props.value}{props.unit}</p></>
 
 const Button = (props) => (
-    <button onClick={props.handleClick}>{props.text}</button>
+    <button className={"Button"} onClick={props.handleClick}>{props.text}</button>
 )
 
 const App = () => {
