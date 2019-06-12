@@ -3,20 +3,22 @@ import Contacts from './components/Contacts'
 import './index.css'
 
 const App = () => {
-    const [ persons, setPersons] = useState([
-        { name: 'Arto Hellas', id: 1}
-    ])
+    const [ persons, setPersons] = useState([])
     const [ newName, setNewName ] = useState('')
 
     const addPerson = (event) => {
         event.preventDefault()
         console.log(newName)
-        let newPerson = {
-            name: newName,
-            id: persons.length + 1
+        if (persons.find(obj => obj.name === newName) !== undefined){
+            alert(`${newName} on jo olemassa`)
+        }else {
+            let newPerson = {
+                name: newName,
+                id: persons.length + 1
+            }
+            setPersons(persons.concat(newPerson))
+            setNewName('')
         }
-        setPersons(persons.concat(newPerson))
-        setNewName('')
     }
 
     const handleNameChange = (event) => {
@@ -38,7 +40,7 @@ const App = () => {
                     <button type="submit">add</button>
                 </div>
             </form>
-            <h2>Numbers</h2>
+            <h2>Contacts</h2>
             <Contacts persons={persons} />
         </div>
     )
