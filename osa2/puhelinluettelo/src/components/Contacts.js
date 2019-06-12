@@ -3,11 +3,7 @@ import Contact from './Contact'
 
 const Contacts = ({persons, filter}) => {
     console.log(filter)
-    let showAll = true;
-
-    if (filter !== '') {
-        showAll = false
-    }
+    let showAll = filter === ''
 
     const contactsToShow = showAll
         ? persons
