@@ -6,7 +6,7 @@ const FormTable = ({inputs, onsubmit}) => {
         <tr key={input.id}>
             <td>{input.name}</td>
             <td>
-                <Input handler={input.handler} value={input.value} />
+                <Input reff={input.ref} handler={input.handler} value={input.value} />
             </td>
         </tr>
     )

@@ -1,26 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import Phonebook from './components/Phonebook'
 import './index.css'
 
 const App = () => {
-    const [ persons, setPersons] = useState([
-        { name: 'Arto Hellas',      number: '040-123456',       id: 1 },
-        { name: 'Ada Lovelace',     number: '39-44-5323523',    id: 2 },
-        { name: 'Dan Abramov',      number: '12-43-234345',     id: 3 },
-        { name: 'Mary Poppendieck', number: '39-23-6423122',    id: 4 }
-    ])
+    const [ persons, setPersons] =      useState([])
     const [ newName, setNewName ] =     useState('')
     const [ newNumber, setNewNumber ] = useState('')
     const [ filter, setFilter] =        useState('')
 
-
+    const nameRef = useRef('')
+    const numberRef = useRef('')
 
     const addPerson = (event) => {
         event.preventDefault()
-        console.log(newName)
+        if (newName === "") {
+            nameRef.current.focus()
+            return
+        }
+        else if (newNumber === "") {
+            numberRef.current.focus()
+            return
+        }
         if (persons.find(obj => obj.name === newName) !== undefined){
             alert(`${newName} on jo olemassa`)
+            console.log(nameRef.current)
         }else {
             let newPerson = {
                 name:   newName,
@@ -30,7 +34,7 @@ const App = () => {
             setPersons(persons.concat(newPerson))
             setNewName('')
             setNewNumber('')
-            
+            nameRef.current.focus()
         }
     }
 
@@ -51,13 +55,15 @@ const App = () => {
             name:       "Name",
             value:      newName,
             handler:    handleNameChange,
-            id:         1
+            id:         1,
+            ref:        nameRef,
         },
         {
             name:       "Number",
             value:      newNumber,
             handler:    handleNumberChange,
-            id:         2
+            id:         2,
+            ref:        numberRef,
         },
     ]
 

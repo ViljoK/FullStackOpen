@@ -13,5 +13,7 @@ code {
 }
 
 td {
-  min-width: 65px;
+  padding-right: 10px;
+  min-width: 60px;
 }
+
