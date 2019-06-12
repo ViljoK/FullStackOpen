@@ -1,19 +1,32 @@
 import React from 'react'
 import Contact from './Contact'
 
-const Contacts = (props) => {
+const Contacts = ({persons, filter}) => {
+    console.log(filter)
+    let showAll = true;
 
-    const rows = () => props.persons.map(person =>
+    if (filter !== '') {
+        showAll = false
+    }
+
+    const contactsToShow = showAll
+        ? persons
+        : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+
+    const rows = () => contactsToShow.map(person =>
         <Contact
             key={person.id}
             name={person.name}
+            number={person.number}
         />
     )
     return (
         <>
-            <ul>
-                {rows()}
-            </ul>
+            <table>
+                <tbody>
+                    {rows()}
+                </tbody>
+            </table>
         </>
     )
 }
