@@ -1,7 +1,7 @@
 import React from 'react'
 import Input from './Input'
 
-const FormTable = ({inputs, onsubmit}) => {
+const InputTable = ({inputs}) => {
     const rows = () => inputs.map(input =>
         <tr key={input.id}>
             <td>{input.name}</td>
@@ -12,16 +12,13 @@ const FormTable = ({inputs, onsubmit}) => {
     )
     return (
         <>
-            <form onSubmit={onsubmit}>
-                <table>
-                    <tbody>
-                        {rows()}
-                    </tbody>
-                </table>
-                <button type={"submit"}>Add</button>
-            </form>
+            <table>
+                <tbody>
+                {rows()}
+                </tbody>
+            </table>
         </>
     )
 }
 
-export default FormTable
+export default InputTable

@@ -2,7 +2,6 @@ import React from 'react'
 import Contact from './Contact'
 
 const Contacts = ({persons, filter}) => {
-    console.log(filter)
     let showAll = filter === ''
 
     const contactsToShow = showAll
@@ -11,9 +10,9 @@ const Contacts = ({persons, filter}) => {
 
     const rows = () => contactsToShow.map(person =>
         <Contact
-            key={person.id}
-            name={person.name}
-            number={person.number}
+            key=    {person.id}
+            name=   {person.name}
+            number= {person.number}
         />
     )
     return (
