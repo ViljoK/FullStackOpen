@@ -1,5 +1,6 @@
 import React from 'react'
 import Contacts from './Contacts'
+import FormTable from "./FormTable";
 
 const Phonebook = (props) => {
     return (
@@ -12,37 +13,7 @@ const Phonebook = (props) => {
                 />
             </div>
             <h2>Add new</h2>
-            <form onSubmit={props.onsubmit}>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>
-                            name:
-                        </td>
-                        <td>
-                            <input
-                                value={props.newName}
-                                onChange={props.handleNameChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            number:
-                        </td>
-                        <td>
-                            <input
-                                value={props.newNumber}
-                                onChange={props.handleNumberChange}
-                            />
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <button type="submit">Add</button>
-                </div>
-            </form>
+            <FormTable inputs={props.formInputStates}/>
             <h2>Contacts</h2>
             <Contacts persons={props.persons} filter={props.filter} />
         </>

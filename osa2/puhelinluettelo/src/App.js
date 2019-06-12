@@ -14,6 +14,8 @@ const App = () => {
     const [ newNumber, setNewNumber ] = useState('')
     const [ filter, setFilter] =        useState('')
 
+
+
     const addPerson = (event) => {
         event.preventDefault()
         console.log(newName)
@@ -44,15 +46,27 @@ const App = () => {
         setFilter(event.target.value)
     }
 
+    const formInputStates = [
+        {
+            name: "Name",
+            value: newName,
+            handler: handleNameChange,
+            id: 1
+        },
+        {
+            name: "Number",
+            value: newNumber,
+            handler: handleNumberChange,
+            id: 2
+        },
+    ]
+
     return (
         <>
             <Phonebook
                 onsubmit={addPerson}
-                newName={newName}
-                newNumber={newNumber}
+                formInputStates={formInputStates}
                 filter={filter}
-                handleNameChange={handleNameChange}
-                handleNumberChange={handleNumberChange}
                 handleFilterChange={handleFilterChange}
                 persons={persons}
             />
