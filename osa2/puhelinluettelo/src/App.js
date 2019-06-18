@@ -1,13 +1,25 @@
-import React, { useState, useRef } from 'react'
-
+import React, { useState, useRef, useEffect } from 'react'
+import axios from 'axios'
 import Phonebook from './components/Phonebook'
 import './index.css'
 
 const App = () => {
+    const url = 'http://localhost:3001/'
     const [ persons, setPersons] =      useState([])
     const [ newName, setNewName ] =     useState('')
     const [ newNumber, setNewNumber ] = useState('')
     const [ filter, setFilter] =        useState('')
+
+    useEffect( () => {
+        console.log('effect')
+        axios
+            .get(url + 'persons')
+            .then(response => {
+                console.log('haku valmis')
+                setPersons(response.data)
+            })
+    }, [])
+    console.log('Tarkistus: ', persons.length)
 
     const nameRef = useRef('')
     const numberRef = useRef('')
