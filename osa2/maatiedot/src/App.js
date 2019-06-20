@@ -27,7 +27,7 @@ const App = () => {
     }
 
     const handleShowButton = (code) => () => {
-        console.log('ShowButton', code)
+        console.log(`ShowButton ${code}`)
         setFilter(code)
         let result = countries.filter((country) => country.alpha3Code === code)
         setResults(result)
@@ -36,9 +36,9 @@ const App = () => {
 
     useEffect(() => {
         axios
-        .get(url + 'all')
+        .get(`${url}all`)
         .then(response => {
-            console.log('Haku valmis:', response.data.length, 'maata löytyi')
+            console.log(`Haku valmis: ${response.data.length} maata löytyi`)
             setCountries(response.data)
         })
     }, [])

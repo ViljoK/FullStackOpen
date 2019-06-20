@@ -3,7 +3,7 @@ import axios from 'axios'
 import List from './List'
 
 const Country = ({country}) => {
-    console.log('Country: ', country)
+    console.log(`Country: ${country}`)
     const url = 'http://api.apixu.com/v1/current.json?key=bab5fb29f3ed442ebef102431192006&q='
     const [weather, setWeather] = useState({})
 
@@ -12,7 +12,7 @@ const Country = ({country}) => {
             ? country.capital
             : '*'
         axios
-        .get(url + city + ' ' + country.name)
+        .get(`${url}${city} ${country.name}`)
         .then(response => {
             console.log(response.data.location)
             setWeather(response.data.current)
@@ -21,8 +21,7 @@ const Country = ({country}) => {
             console.log(e[0].response.data.error)
         })
     }, [country.name, country.capital])
-
-    console.log('WET', weather)
+    
     const c = weather.condition
     const img = c
         ? <img src={c.icon} alt={c.text}/>
@@ -30,12 +29,12 @@ const Country = ({country}) => {
     
     const t = weather.temp_c
     const temp = t !== undefined
-        ? 'Temp: ' + t + ' \xB0C'
+        ? `Temp: ${t} \xB0C`
         : 'Not set'
 
     const w = weather.wind_kph
     const wind = w !== undefined
-        ? 'Wind: ' + w + ' km/h'
+        ? `Wind: ${w} km/h`
         : 'Not set'
 
     return (
