@@ -17,22 +17,25 @@ const Country = ({country}) => {
             console.log(response.data.location)
             setWeather(response.data.current)
         })
-        .catch(error => {
-            console.log(error)
+        .catch((...e) => {
+            console.log(e[0].response.data.error)
         })
-    }, [country.capital])
+    }, [country.name, country.capital])
 
     console.log('WET', weather)
-    const img = weather.condition
-        ? <img src={weather.condition.icon} alt={weather.condition.text}/>
+    const c = weather.condition
+    const img = c
+        ? <img src={c.icon} alt={c.text}/>
         : <img alt={'empty'}/>
     
-    const temp = weather.temp_c !== undefined
-        ? 'Temp: ' + weather.temp_c + ' \xB0C'
+    const t = weather.temp_c
+    const temp = t !== undefined
+        ? 'Temp: ' + t + ' \xB0C'
         : 'Not set'
 
-    const wind = weather.wind_kph !== undefined
-        ? 'Wind: ' + weather.wind_kph + ' km/h'
+    const w = weather.wind_kph
+    const wind = w !== undefined
+        ? 'Wind: ' + w + ' km/h'
         : 'Not set'
 
     return (
