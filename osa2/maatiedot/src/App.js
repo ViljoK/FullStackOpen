@@ -7,15 +7,15 @@ import './index.css'
 const App = () => {
     const url = 'https://restcountries.eu/rest/v2/'
 
-    const [countries, setCountries] = useState([])
-    const [filter, setFilter]       = useState('')
-    const [results, setResults]     = useState([])
+    const [countries, setCountries]     = useState([])
+    const [filter, setFilter]           = useState('')
+    const [results, setResults]         = useState([])
 
     const handleFilterChange = (event) => {
-        let filter = event.target.value
-        setFilter(filter)
+        let newFilter = event.target.value
+        setFilter(newFilter)
         let newResults = countries.filter(country => {
-            const filterPieces = filter.split(' ')
+            const filterPieces = newFilter.split(' ')
             for (let piece of filterPieces) {
                 if (!country.name.toUpperCase().includes(piece.toUpperCase())) {
                     return false
@@ -26,22 +26,28 @@ const App = () => {
         setResults(newResults)
     }
 
+    const handleShowButton = (code) => () => {
+        console.log('ShowButton', code)
+        setFilter(code)
+        let result = countries.filter((country) => country.alpha3Code === code)
+        setResults(result)
+        console.log(result)
+    }
+
     useEffect(() => {
-        console.log('axios')
         axios
         .get(url + 'all')
         .then(response => {
+            console.log('Haku valmis:', response.data.length, 'maata löytyi')
             setCountries(response.data)
         })
     }, [])
-
-    console.log('Alku')
 
     return (
         <> 
             <p>Search countries:</p>
             <Input handler={handleFilterChange} value={filter} />
-            <Results countries={results} filter={filter} />
+            <Results countries={results} filter={filter} handleShowButton={handleShowButton}/>
         </>
     )
 }

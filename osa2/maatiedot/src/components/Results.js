@@ -2,8 +2,7 @@ import React from 'react'
 import Table from './Table'
 import Country from './Country'
 
-const Results = ({countries, filter}) => {
-    console.log('Res: ', filter.length)
+const Results = ({countries, filter, handleShowButton}) => {
     if (countries.length === 0 && filter.length === 0) {
         return <><p>Start typing to search</p></>
     }
@@ -17,7 +16,7 @@ const Results = ({countries, filter}) => {
         return <><Country country={countries[0]} /></>
     }
     else {
-        return <><Table countries={countries} /></>
+        return <><Table countries={countries} handleShowButton={handleShowButton}/></>
     }
 }
 
