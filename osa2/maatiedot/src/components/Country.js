@@ -10,9 +10,9 @@ const Country = ({country}) => {
     useEffect(() => {
         const city = country.capital
             ? country.capital
-            : 'Paltaniemi'
+            : '*'
         axios
-        .get(url + city)
+        .get(url + city + ' ' + country.name)
         .then(response => {
             console.log(response.data.location)
             setWeather(response.data.current)
