@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
-import axios from 'axios'
 import Phonebook from './components/Phonebook'
+import noteService from './services/notes'
 import './index.css'
 
 const App = () => {
-    const url = 'http://localhost:3001/'
     const [ persons, setPersons] =      useState([])
     const [ newName, setNewName ] =     useState('')
     const [ newNumber, setNewNumber ] = useState('')
@@ -12,13 +11,13 @@ const App = () => {
 
     useEffect( () => {
         console.log('effect')
-        axios
-            .get(url + 'persons')
+        noteService
+            .getAll()
             .then(response => {
                 console.log('haku valmis')
                 setPersons(response.data)
             })
-    }, [])
+    })
     console.log('Tarkistus: ', persons.length)
 
     const nameRef = useRef('')
