@@ -13,12 +13,11 @@ const App = () => {
         console.log('effect')
         noteService
             .getAll()
-            .then(response => {
-                console.log('haku valmis')
-                setPersons(response.data)
+            .then(initialPersons => {
+                setPersons(initialPersons)
+                console.log(`Haku valmis, löytyi: ${persons.length} yhteystietoa`)
             })
-    })
-    console.log('Tarkistus: ', persons.length)
+    }, [persons.length])
 
     const nameRef = useRef('')
     const numberRef = useRef('')
@@ -37,15 +36,18 @@ const App = () => {
             alert(`${newName} on jo olemassa`)
             console.log(nameRef.current)
         }else {
-            let newPerson = {
+            const newPerson = {
                 name:   newName,
-                number: newNumber,
-                id:     persons.length + 1
+                number: newNumber
             }
-            setPersons(persons.concat(newPerson))
-            setNewName('')
-            setNewNumber('')
-            nameRef.current.focus()
+            noteService
+                .create(newPerson)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson))
+                    setNewName('')
+                    setNewNumber('')
+                    nameRef.current.focus()
+                })
         }
     }
 
