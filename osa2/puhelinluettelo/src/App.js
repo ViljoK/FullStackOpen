@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Phonebook from './components/Phonebook'
-import noteService from './services/notes'
+import personService from './services/persons'
 import './index.css'
 
 const App = () => {
@@ -11,7 +11,7 @@ const App = () => {
 
     useEffect( () => {
         console.log('effect')
-        noteService
+        personService
             .getAll()
             .then(initialPersons => {
                 setPersons(initialPersons)
@@ -22,7 +22,7 @@ const App = () => {
     const nameRef = useRef('')
     const numberRef = useRef('')
 
-    const addPerson = (event) => {
+    const addPerson = event => {
         event.preventDefault()
         if (newName === "") {
             nameRef.current.focus()
@@ -40,7 +40,7 @@ const App = () => {
                 name:   newName,
                 number: newNumber
             }
-            noteService
+            personService
                 .create(newPerson)
                 .then(returnedPerson => {
                     setPersons(persons.concat(returnedPerson))
@@ -51,15 +51,29 @@ const App = () => {
         }
     }
 
-    const handleNameChange = (event) => {
+    const deletePerson = event => {
+        event.persist()
+        const index = persons.findIndex(person => person.id === parseInt(event.target.id))
+        console.log(persons, index, event.target.id)
+        if (window.confirm(`Haluatko varmasti poistaa ${persons[index].name}`)) {
+            personService
+                .drop(event.target.id)
+                .then(response => {
+                    console.log(response)
+                })
+            setPersons([])
+        }
+    }
+
+    const handleNameChange = event => {
         setNewName(event.target.value)
     }
 
-    const handleNumberChange = (event) => {
+    const handleNumberChange = event => {
         setNewNumber(event.target.value)
     }
 
-    const handleFilterChange = (event) => {
+    const handleFilterChange = event => {
         setFilter(event.target.value)
     }
 
@@ -97,6 +111,7 @@ const App = () => {
                 filterStates=   {filterStates}
                 filter=         {filter}
                 persons=        {persons}
+                deletePerson=   {deletePerson}
             />
         </>
     )

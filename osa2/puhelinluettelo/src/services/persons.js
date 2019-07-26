@@ -12,5 +12,16 @@ const create = newPerson => {
 const update = () => {
     
 }
+const drop = id => {
+    const request = axios.delete(`${baseUrl}/${id}`)
+    return request.then(response => {
+        if (response.status === 200) {
+            return "Poisto onnistui"
+        }
+        else {
+            return "Poisto epäonnistui"
+        }
+    })
+}
 
-export default {getAll, create, update}
+export default {getAll, create, update, drop}
