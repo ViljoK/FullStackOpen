@@ -6,7 +6,17 @@ const Contacts = ({persons, filter, deletePerson}) => {
 
     const contactsToShow = showAll
         ? persons
-        : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+        : persons.filter(person => {
+            const filterPieces = filter.split(" ")
+            console.log(filterPieces)
+            for (let piece of filterPieces) {
+                if (!person.name.toLowerCase().includes(piece.toLowerCase()) && !person.number.includes(piece)) {
+                    return false
+                }
+            }
+            return true
+            // person.name.toLowerCase().includes(filter.toLowerCase())
+        })
 
     const rows = () => contactsToShow.map(person =>
         <Contact
