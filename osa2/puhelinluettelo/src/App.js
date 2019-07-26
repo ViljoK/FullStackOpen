@@ -52,7 +52,7 @@ const App = () => {
                         setNewName('')
                         setNewNumber('')
                         nameRef.current.focus()
-                        setMessage(`${returnedPerson.name} tiedot päivitetty`)
+                        setMessage({text: `${returnedPerson.name} tiedot päivitetty`, color: 'lightgreen'})
                         setTimeout(() => {
                             setMessage(null)
                         }, 4000)
@@ -70,7 +70,7 @@ const App = () => {
                     setNewName('')
                     setNewNumber('')
                     nameRef.current.focus()
-                    setMessage(`${returnedPerson.name} lisätty`)
+                    setMessage({text: `${returnedPerson.name} lisätty`, color: 'lightgreen'})
                     setTimeout(() => {
                         setMessage(null)
                     }, 4000)
@@ -86,11 +86,18 @@ const App = () => {
             personService
                 .drop(event.target.id)
                 .then(response => {
-                    setMessage('Poisto onnistui')
+                    setMessage({text: 'Poisto onnistui', color: 'lightgreen'})
                     setTimeout(() => {
                         setMessage(null)
                     }, 4000)
                     console.log(response)
+                })
+                .catch(error => {
+                    setMessage({text: 'Virhe: Henkilö oli jo poistettu', color: 'red'})
+                    setTimeout(() => {
+                        setMessage(null)
+                    }, 4000)
+                    console.log(error)
                 })
             setPersons([])
         }
@@ -133,9 +140,16 @@ const App = () => {
             id:         1
         }
     ]
+    const appStyle = {
+        width: 400,
+        margin: '0 auto 0 auto',
+        border: '5px solid darkblue',
+        borderRadius: 10,
+        padding: 10
+    }
 
     return (
-        <>
+        <div style={appStyle}>
             <h1>Phonebook</h1>
             <InputTable inputs={filterStates} />
             <h2>Add new</h2>
@@ -143,7 +157,7 @@ const App = () => {
             <h2>Contacts</h2>
             <Contacts persons={persons} filter={filter} deletePerson={deletePerson}/>
             <Notification message = {message} />
-        </>
+        </div>
     )
 
 }

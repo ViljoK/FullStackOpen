@@ -9,20 +9,19 @@ const Notification = ({message}) => {
         padding: 10,
         border: '1px solid black',
         borderRadius: 10,
-        width: 300,
-        backgroundColor: 'lightgreen'
+        width: 500,
+        backgroundColor: message.color
     }
     const msgStyle = {
         width: '95%',
         margin: '0 auto 0 auto',
-        color: 'darkgreen',
         textAlign: 'center'
     }
 
     return (
         <>
             <div style={divStyle}>
-                <p style={msgStyle}>{message}</p>
+                <p style={msgStyle}>{message.text}</p>
             </div>
         </>
     )
