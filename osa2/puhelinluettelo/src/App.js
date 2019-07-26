@@ -32,9 +32,24 @@ const App = () => {
             numberRef.current.focus()
             return
         }
-        if (persons.find(obj => obj.name === newName) !== undefined){
-            alert(`${newName} on jo olemassa`)
-            console.log(nameRef.current)
+        const existingPerson = persons.find(obj => obj.name === newName)
+        if (existingPerson !== undefined){
+            
+            if (window.confirm(`Henkilö ${existingPerson.name} löytyy jo osoitekirjasta. \nHaluatko päivittää numeron?`)) {
+                const updatePerson = {
+                    name:   existingPerson.name,
+                    number: newNumber,
+                    id: existingPerson.id
+                }
+                personService
+                    .update(updatePerson)
+                    .then(returnedPerson => {
+                        setPersons([])
+                        setNewName('')
+                        setNewNumber('')
+                        nameRef.current.focus()
+                    })
+            }
         }else {
             const newPerson = {
                 name:   newName,
