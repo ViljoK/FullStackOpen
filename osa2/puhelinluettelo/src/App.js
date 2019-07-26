@@ -1,13 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
-import Phonebook from './components/Phonebook'
 import personService from './services/persons'
+import Contacts from './components/Contacts'
+import FormTable from "./components/FormTable"
+import InputTable from "./components/InputTable"
+import Notification from './components/Notification'
 import './index.css'
 
 const App = () => {
-    const [ persons, setPersons] =      useState([])
-    const [ newName, setNewName ] =     useState('')
-    const [ newNumber, setNewNumber ] = useState('')
-    const [ filter, setFilter] =        useState('')
+    const [ persons, setPersons]        = useState([])
+    const [ newName, setNewName ]       = useState('')
+    const [ newNumber, setNewNumber ]   = useState('')
+    const [ filter, setFilter]          = useState('')
+    const [ message, setMessage]        = useState(null)
 
     useEffect( () => {
         console.log('effect')
@@ -48,6 +52,10 @@ const App = () => {
                         setNewName('')
                         setNewNumber('')
                         nameRef.current.focus()
+                        setMessage(`${returnedPerson.name} tiedot päivitetty`)
+                        setTimeout(() => {
+                            setMessage(null)
+                        }, 4000)
                     })
             }
         }else {
@@ -62,6 +70,10 @@ const App = () => {
                     setNewName('')
                     setNewNumber('')
                     nameRef.current.focus()
+                    setMessage(`${returnedPerson.name} lisätty`)
+                    setTimeout(() => {
+                        setMessage(null)
+                    }, 4000)
                 })
         }
     }
@@ -74,6 +86,10 @@ const App = () => {
             personService
                 .drop(event.target.id)
                 .then(response => {
+                    setMessage('Poisto onnistui')
+                    setTimeout(() => {
+                        setMessage(null)
+                    }, 4000)
                     console.log(response)
                 })
             setPersons([])
@@ -120,14 +136,13 @@ const App = () => {
 
     return (
         <>
-            <Phonebook
-                onsubmit=       {addPerson}
-                addStates=      {addStates}
-                filterStates=   {filterStates}
-                filter=         {filter}
-                persons=        {persons}
-                deletePerson=   {deletePerson}
-            />
+            <h1>Phonebook</h1>
+            <InputTable inputs={filterStates} />
+            <h2>Add new</h2>
+            <FormTable inputs={addStates} onsubmit={addPerson}/>
+            <h2>Contacts</h2>
+            <Contacts persons={persons} filter={filter} deletePerson={deletePerson}/>
+            <Notification message = {message} />
         </>
     )
 

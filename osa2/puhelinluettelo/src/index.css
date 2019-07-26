@@ -17,3 +17,11 @@ td {
   min-width: 60px;
 }
 
+.name {
+  color: darkblue;
+}
+
+.phone {
+  font-weight: bold;
+  color: darkblue;
+}
