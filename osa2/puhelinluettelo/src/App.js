@@ -52,7 +52,7 @@ const App = () => {
                         setNewName('')
                         setNewNumber('')
                         nameRef.current.focus()
-                        setMessage({text: `${returnedPerson.name} tiedot päivitetty`, color: 'lightgreen'})
+                        setMessage({text: `${returnedPerson.name} updated`, color: 'lightgreen'})
                         setTimeout(() => {
                             setMessage(null)
                         }, 4000)
@@ -70,7 +70,7 @@ const App = () => {
                     setNewName('')
                     setNewNumber('')
                     nameRef.current.focus()
-                    setMessage({text: `${returnedPerson.name} lisätty`, color: 'lightgreen'})
+                    setMessage({text: `${returnedPerson.name} added`, color: 'lightgreen'})
                     setTimeout(() => {
                         setMessage(null)
                     }, 4000)
@@ -82,18 +82,18 @@ const App = () => {
         event.persist()
         const index = persons.findIndex(person => person.id === parseInt(event.target.id))
         console.log(persons, index, event.target.id)
-        if (window.confirm(`Haluatko varmasti poistaa ${persons[index].name}`)) {
+        if (window.confirm(`Do you really want to delete ${persons[index].name}`)) {
             personService
                 .drop(event.target.id)
                 .then(response => {
-                    setMessage({text: 'Poisto onnistui', color: 'lightgreen'})
+                    setMessage({text: 'Delete successful', color: 'lightgreen'})
                     setTimeout(() => {
                         setMessage(null)
                     }, 4000)
                     console.log(response)
                 })
                 .catch(error => {
-                    setMessage({text: 'Virhe: Henkilö oli jo poistettu', color: 'red'})
+                    setMessage({text: 'Error: Allready deleted', color: 'red'})
                     setTimeout(() => {
                         setMessage(null)
                     }, 4000)
