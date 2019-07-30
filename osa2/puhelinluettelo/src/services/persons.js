@@ -9,8 +9,8 @@ const create = newPerson => {
     const request = axios.post(baseUrl, newPerson)
     return request.then(response => response.data)
 }
-const update = updatePerson => {
-    const request = axios.put(`${baseUrl}/${updatePerson.id}`, updatePerson)
+const update = (id, number) => {
+    const request = axios.put(`${baseUrl}/${id}`, {number : number})
     return request.then(response => response.data)
 }
 const drop = id => {

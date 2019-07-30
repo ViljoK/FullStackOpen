@@ -40,13 +40,9 @@ const App = () => {
         if (existingPerson !== undefined){
             
             if (window.confirm(`Henkilö ${existingPerson.name} löytyy jo osoitekirjasta. \nHaluatko päivittää numeron?`)) {
-                const updatePerson = {
-                    name:   existingPerson.name,
-                    number: newNumber,
-                    id: existingPerson.id
-                }
+                
                 personService
-                    .update(updatePerson)
+                    .update(existingPerson.id, newNumber)
                     .then(returnedPerson => {
                         setPersons([])
                         setNewName('')
