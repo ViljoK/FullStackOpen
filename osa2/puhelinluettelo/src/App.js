@@ -6,6 +6,7 @@ import InputTable from "./components/InputTable"
 import Notification from './components/Notification'
 import './index.css'
 
+
 const App = () => {
     const [ persons, setPersons]        = useState([])
     const [ newName, setNewName ]       = useState('')
@@ -43,12 +44,12 @@ const App = () => {
                 
                 personService
                     .update(existingPerson.id, newNumber)
-                    .then(returnedPerson => {
+                    .then(response => {
                         setPersons([])
                         setNewName('')
                         setNewNumber('')
                         nameRef.current.focus()
-                        setMessage({text: `${returnedPerson.name} updated`, color: 'lightgreen'})
+                        setMessage({text: response.message, color: 'lightgreen'})
                         setTimeout(() => {
                             setMessage(null)
                         }, 4000)
@@ -76,7 +77,7 @@ const App = () => {
 
     const deletePerson = event => {
         event.persist()
-        const index = persons.findIndex(person => person.id === parseInt(event.target.id))
+        const index = persons.findIndex(person => person.id === event.target.id)
         console.log(persons, index, event.target.id)
         if (window.confirm(`Do you really want to delete ${persons[index].name}`)) {
             personService
@@ -130,27 +131,29 @@ const App = () => {
 
     const filterStates = [
         {
-            name:       "Filter",
+            name:       "Find",
             value:      filter,
             handler:    handleFilterChange,
             id:         1
         }
     ]
+
     const appStyle = {
-        width: 400,
+        width: '90%',
         margin: '0 auto 0 auto',
-        border: '5px solid darkblue',
-        borderRadius: 10,
-        padding: 10
+        borderRadius: 10
+    }
+    const h1Style = {
+        textAlign: 'center'
     }
 
     return (
         <div style={appStyle}>
-            <h1>Phonebook</h1>
-            <InputTable inputs={filterStates} />
+            <h1 style={h1Style}>Phonebook</h1>
             <h2>Add new</h2>
             <FormTable inputs={addStates} onsubmit={addPerson}/>
             <h2>Contacts</h2>
+            <InputTable inputs={filterStates} />
             <Contacts persons={persons} filter={filter} deletePerson={deletePerson}/>
             <Notification message = {message} />
         </div>
